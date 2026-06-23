@@ -40,10 +40,20 @@ Hooks.on("createActor", async (entity, options, userId) => {
   }
 });
 
+Hooks.on("renderDialog", (dialog, html) => {
+  // hiding engeryPointTokens from the create dialog as they are used
+  // only internally
+  Array.from(html.find("#document-create option")).forEach((i) => {
+    if (i.value == "energyPointToken") {
+      i.remove();
+    }
+  });
+});
+
 Hooks.on("renderCombatTracker", (app, html, combatInfo) => {
-  const currentCombat = combatInfo.combats[combatInfo.currentIndex - 1];
+  const currentCombat = combatInfo.combat;
   if (currentCombat) {
-    html.find(".combatant").each((i, el) => {
+    $(html).find(".combatant").each((i, el) => {
       const id = el.dataset.combatantId;
       const combatant = currentCombat.combatants.find((c) => c.id === id);
       const initDiv = el.getElementsByClassName("token-initiative")[0];

@@ -331,13 +331,35 @@ export const migrateActorKeyArtIfNeeded = function (actor) {
     (actor.type === "npc" || actor.type === "character") &&
     actor.system?.keyArt
   ) {
-    actor.update(createActorKeyArtUpdate(actor));
+    actor.img = actor.system.keyArt;
+    actor.system.keyArt = "";
   }
 };
 
-export const migrateBlastPower = function(itemData) {
+export const migrateBlastPower = function (itemData) {
+  if (itemData._id === null) {
+    return;
+  }
   if (itemData.system.crit.blastPower) {
-    itemData.update({"system.blastPower": itemData.system.crit.blastPower});
-    itemData.update({"system.crit.blastPower": null});
+    itemData.update({ "system.blastPower": itemData.system.crit.blastPower });
+    itemData.update({ "system.crit.blastPower": null });
+  }
+};
+
+export const migrateTalentBonus = function (source) {
+  if (source.type !== "talent") {
+    return;
+  }
+  if (!source.compendium?.locked && source.system?.hpBonus) {
+    source.system.itemModifiers = {
+      nameHpMod: { mod: "itemModifierHP", value: source.system?.hpBonus },
+    };
+    source.system.hpBonus = null;
+  }
+  if (!source.compendium?.locked && source.system?.mpBonus) {
+    source.system.itemModifiers = {
+      nameMpMod: { mod: "itemModifierMP", value: source.system?.mpBonus },
+    };
+    source.system.mpBonus = null;
   }
 };

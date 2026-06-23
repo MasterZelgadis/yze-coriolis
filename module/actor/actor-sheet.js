@@ -1,6 +1,5 @@
 import { getID } from "../util.js";
-import { coriolisRoll } from "../coriolis-roll.js";
-import { coriolisModifierDialog } from "../coriolis-roll.js";
+import { CoriolisModifierDialog } from "../coriolisRollModifier.js";
 import {
   computeNewBarValue,
   onHoverBarSegmentIn,
@@ -8,7 +7,6 @@ import {
   prepDataBarBlocks,
 } from "./databar.js";
 import { buildCrewOptionsArray } from "./crew.js";
-import { migrateActorKeyArtIfNeeded } from "../migration.js";
 
 /**
  * Extend the basic ActorSheet for a basic Coriolis character
@@ -52,11 +50,6 @@ export class yzecoriolisActorSheet extends ActorSheet {
 
   /** @override */
   async getData(options) {
-    // Migrate keyArt to img whenever an actor sheet is opened if needed.
-    // Even though we ran a proper migration on upgrade, this is to make sure modules or compendiums
-    // installed after the migration ran will still be migrated.
-    migrateActorKeyArtIfNeeded(this.actor);
-
     const baseData = super.getData(options);
     let itemData = {};
     let actorStats = {};
@@ -171,7 +164,7 @@ export class yzecoriolisActorSheet extends ActorSheet {
     for (let i of actor.items) {
       let item = i.system;
       // setup equipped status
-      const isActive = getProperty(item, "equipped");
+      const isActive = foundry.utils.getProperty(item, "equipped");
       item.toggleClass = isActive ? "equipped" : "";
 
       // append to gear
@@ -343,7 +336,7 @@ export class yzecoriolisActorSheet extends ActorSheet {
     // for display purposes we'll halve everything so that encumbrance makes
     // sense to users that are familiar with the rules.
     let enc = {
-      max: strengthValue / 2,
+      max: strengthValue / 2 + this.actor.system.encumbranceMods,
       value: totalWeight / 2,
     };
     let pct = (enc.value / enc.max) * 100;
@@ -351,7 +344,11 @@ export class yzecoriolisActorSheet extends ActorSheet {
       pct = 0;
     }
     enc.percentage = Math.min(pct, 100);
-    enc.encumbered = pct > 100;
+    if (pct > 100 || pct < 0) {
+      enc.encumbered = true;
+    } else {
+      enc.encumbered = false;
+    }
     return enc;
   }
 
@@ -455,7 +452,8 @@ export class yzecoriolisActorSheet extends ActorSheet {
     // Get the type of item to create.
     const type = header.dataset.type;
     // Grab any data associated with this control.
-    const dataset = foundry.utils.deepClone(header.dataset);
+    // This is a DOMstringmap now in v13, need to convert to normal object.
+    const dataset = Object.assign({}, foundry.utils.deepClone(header.dataset));
     // Initialize a default name.
     const name = dataset.defaultname;
     // Prepare the item object.
@@ -483,7 +481,7 @@ export class yzecoriolisActorSheet extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
     const attr = "system.equipped";
-    return item.update({ [attr]: !getProperty(item, attr) });
+    return item.update({ [attr]: !foundry.utils.getProperty(item, attr) });
   }
 
   /**
@@ -496,11 +494,23 @@ export class yzecoriolisActorSheet extends ActorSheet {
     const element = event.currentTarget;
     const dataset = element.dataset;
     const actorData = this.actor.system;
-    const automaticWeapon = dataset.automaticweapon === "true";
+
     const itemId = element.closest(".item")
       ? element.closest(".item").dataset.itemId
       : null;
     const item = itemId ? this.actor.items.get(itemId).system : null;
+
+    let itemModifiers = {};
+    if (dataset.rolltype === "armor") {
+      itemModifiers = actorData.itemModifiers.armor;
+    } else {
+      if (actorData.itemModifiers[dataset.skillkey]) {
+        itemModifiers = actorData.itemModifiers[dataset.skillkey];
+      } else {
+        itemModifiers = actorData.itemModifiers[dataset.attributekey];
+      }
+    }
+
     const rollData = {
       actorType: this.actor.type,
       rollType: dataset.rolltype,
@@ -524,16 +534,13 @@ export class yzecoriolisActorSheet extends ActorSheet {
       crit: item?.crit?.numericValue,
       critText: item?.crit?.customValue,
       features: item?.special ? Object.values(item.special).join(", ") : "",
+      itemModifiers: itemModifiers,
     };
     const chatOptions = this.actor._prepareChatRollOptions(
       "systems/yzecoriolis/templates/sidebar/roll.html",
       dataset.rolltype
     );
-    coriolisModifierDialog((modifier, additionalData) => {
-      rollData.modifier = modifier;
-      rollData.additionalData = additionalData;
-      coriolisRoll(chatOptions, rollData);
-    }, automaticWeapon);
+    new CoriolisModifierDialog(rollData, chatOptions).render(true);
   }
 
   /**

@@ -103,8 +103,11 @@
         </li>
         <li class="entry flexrow">
           <div class="capitalize stat-label">{{localize "YZECORIOLIS.MovementRate"}}</div>
-          <div class="number">
+          <div class="number" style="display:inline-flex; padding-inline:2em;">
             <input class="input-value" type="text" name="system.movementRate" value="{{system.movementRate}}" data-dtype="Number" placeholder="0" />
+            {{#if system.movementRateMods}}
+              <input class="input-value" type="text" name="system.movementRateMods" value="" data-dtype="Number" placeholder="({{#if_gt system.movementRateMods 0}}+{{/if_gt}}{{system.movementRateMods}})" readonly/>
+            {{/if}}
           </div>
         </li>
         <li class="entry flexrow">
@@ -139,8 +142,10 @@
           <a class="item nav-link active" data-tab="stats">{{localize "YZECORIOLIS.SheetStats"}}</a>
           <a class="item nav-link" data-tab="talents">{{localize "YZECORIOLIS.SheetTalents"}}</a>
           <a class="item nav-link" data-tab="gear">{{localize "YZECORIOLIS.SheetItems"}}</a>
+          {{#if owner}}
           <a class="item nav-link" data-tab="bio">{{localize "YZECORIOLIS.SheetBio"}}</a>
           <a class="item nav-link" data-tab="charnotes">{{localize "YZECORIOLIS.CharNotes"}}</a>
+          {{/if }}
         </nav>
 
         <section class="sheet-panels">
@@ -153,6 +158,7 @@
           {{!-- Gear Tab --}}
           {{> "systems/yzecoriolis/templates/actor/parts/actor-gear.html"}}
 
+          {{#if owner}}
           {{!-- Bio Tab --}}
           {{> "systems/yzecoriolis/templates/actor/parts/actor-bio.html"}}
 
@@ -160,6 +166,7 @@
           <div class="tab charnotes" data-group="primary" data-tab="charnotes">
             {{editor bioNotes target="system.notes" button=true owner=owner editable=editable}}
           </div>
+          {{/if }}
         </section>
       </div>
     </div>

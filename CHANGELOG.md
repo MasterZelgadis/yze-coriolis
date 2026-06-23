@@ -1,5 +1,163 @@
 # Changelog
 
+## [4.3.0](https://github.com/hodpub/yze-coriolis/compare/v4.2.0...v4.3.0) (2026-03-06)
+
+
+### Features
+
+* hide actor notes and bio tabs for non-owners ([7f18856](https://github.com/hodpub/yze-coriolis/commit/7f1885610917fe5f61a4ba5724d0eb328e1428c9))
+
+## [4.2.0](https://github.com/hodpub/yze-coriolis/compare/v4.1.0...v4.2.0) (2025-12-02)
+
+
+### Features
+
+* remove dark mode (Fixes [#309](https://github.com/hodpub/yze-coriolis/issues/309)) ([d05ee9c](https://github.com/hodpub/yze-coriolis/commit/d05ee9c82ac29b93c013d06dba207e41bb2333a9))
+
+## [4.1.0](https://github.com/hodpub/yze-coriolis/compare/v4.0.4...v4.1.0) (2025-11-23)
+
+
+### Miscellaneous Chores
+
+* release 4.1.0 ([1e03fdb](https://github.com/hodpub/yze-coriolis/commit/1e03fdb2665692462d3e20efde3b183f7ca36379))
+
+## [4.0.4](https://github.com/hodpub/yze-coriolis/compare/v4.0.3...v4.0.4) (2025-11-23)
+
+
+### Miscellaneous Chores
+
+* release 4.0.4 ([573f0ec](https://github.com/hodpub/yze-coriolis/commit/573f0ec41e4a5e51587cd7d10c83fda78b9b6adb))
+
+## [4.0.3](https://github.com/hodpub/yze-coriolis/compare/v4.0.2...v4.0.3) (2025-11-23)
+
+
+### Bug Fixes
+
+* solve issue on the combat tracker ([#307](https://github.com/hodpub/yze-coriolis/issues/307)) ([2d98494](https://github.com/hodpub/yze-coriolis/commit/2d9849429d8b7e8e2a0bc52f8e3d760ecccd53a9))
+
+## [4.0.2](https://github.com/hodpub/yze-coriolis/compare/v4.0.1...v4.0.2) (2025-11-23)
+
+
+### Bug Fixes
+
+* Allow the GM to roll the Armor selecting a actor on the scene ([e1f63d2](https://github.com/hodpub/yze-coriolis/commit/e1f63d2acc1a4231b99007c0952156a903713127))
+
+### [4.0.1](https://www.github.com/winks-vtt/yze-coriolis/compare/v4.0.0...v4.0.1) (2025-08-30)
+
+
+### Bug Fixes
+
+* talent creation no longer breaks actor sheets ([c46d4b3](https://www.github.com/winks-vtt/yze-coriolis/commit/c46d4b38fd107334e12b276febc7bcd8513d13d5))
+
+## [4.0.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.9.4...v4.0.0) (2025-07-24)
+
+
+### Bug Fixes
+
+* bump version to 4.0 for v13 support ([0bab325](https://www.github.com/winks-vtt/yze-coriolis/commit/0bab325d2909c8b29dd7e0867a797c2cb06982a2))
+* chat listener registration ([7f7e2dd](https://www.github.com/winks-vtt/yze-coriolis/commit/7f7e2ddce9b021ef7dd163b7855ac8e827df0ab7))
+* chat listener registration ([f8bf04f](https://www.github.com/winks-vtt/yze-coriolis/commit/f8bf04fd3ae83a0c2398176dabb0001fb613304d))
+* chat listener registration for pop up messages ([14eb678](https://www.github.com/winks-vtt/yze-coriolis/commit/14eb678f8eb153afe0c8d94cc33014054c2a5a90))
+* css styling issues with official content ([6f73fa3](https://www.github.com/winks-vtt/yze-coriolis/commit/6f73fa3b7aa3b1463034ce16c85f5624eacb0ed0))
+* darkness point controls ([a60061a](https://www.github.com/winks-vtt/yze-coriolis/commit/a60061aebd92e215f9ed82d786a0ca69faff34c8))
+* make flexcol/row scope more specific to sheets to exclude window headers ([924a874](https://www.github.com/winks-vtt/yze-coriolis/commit/924a8741dd5e1a9e25aacdd2514b848ff93ef754))
+* remove add/substract of darkness points and just use the darkness points control HUD. Inspection button is still there. ([ed0759b](https://www.github.com/winks-vtt/yze-coriolis/commit/ed0759b20deb16df5fe390a09104da362742b6ae))
+* scope  flexcol to only apply to sheets ([4e1494a](https://www.github.com/winks-vtt/yze-coriolis/commit/4e1494ae8f757eea2498617d8adb065cb03089e6))
+* scope  flexcol to only apply to sheets ([e023205](https://www.github.com/winks-vtt/yze-coriolis/commit/e02320531a12d73afb1505606d7f7d975655d283))
+* scope  flexcol to only apply to sheets ([148f330](https://www.github.com/winks-vtt/yze-coriolis/commit/148f33090fe51708765184d1e654ba682aff60a4))
+* scope  flexrow to only apply to sheets ([5f3be4b](https://www.github.com/winks-vtt/yze-coriolis/commit/5f3be4b0100bd9cd455c47df8e548813c2db2a26))
+* styling that got broken in v13 update ([9a76020](https://www.github.com/winks-vtt/yze-coriolis/commit/9a7602004dedcda7d755750b3d2db7ae6d7c5b9a))
+* update hook callback ([e986ed7](https://www.github.com/winks-vtt/yze-coriolis/commit/e986ed7347fea4d50fd1fce38c6ebbc1cfdead7c))
+
+
+### Miscellaneous
+
+* release 4.0.0 ([e2fd019](https://www.github.com/winks-vtt/yze-coriolis/commit/e2fd0199a27709fdacb253f2536b88b47bd2ba93))
+* stubbing out v13 compliant system definition ([88c1223](https://www.github.com/winks-vtt/yze-coriolis/commit/88c1223b67edbf9faa331bfdae964aa8bea5c73e))
+
+### [3.9.4](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.9.3...v3.9.4) (2024-12-30)
+
+
+### Bug Fixes
+
+* dice so nice from rolling twice ([7a413d8](https://www.github.com/winks-vtt/yze-coriolis/commit/7a413d875df487135fd89ce4594f87c9e4411dcf))
+
+### [3.9.3](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.9.2...v3.9.3) (2024-09-17)
+
+
+### Bug Fixes
+
+* formatting ([60e9be7](https://www.github.com/winks-vtt/yze-coriolis/commit/60e9be79e0d1c0ffbbd29c3ded29aede3d2a4d61))
+* migrate keyart via fvtt official api ([b9bd89e](https://www.github.com/winks-vtt/yze-coriolis/commit/b9bd89e5f13994e390a385f8638335090ae70b45))
+
+### [3.9.2](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.9.1...v3.9.2) (2024-09-16)
+
+
+### Bug Fixes
+
+* added TODO for future migration work ([26937f4](https://www.github.com/winks-vtt/yze-coriolis/commit/26937f4caa50e22b368cf93a0582e5c5b6c1fec4))
+* migrate talent bonus using standard foundry way of migration ([691f3fc](https://www.github.com/winks-vtt/yze-coriolis/commit/691f3fc3ef9daf588e637386b20d2e4e074f87ba))
+
+### [3.9.1](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.9.0...v3.9.1) (2024-07-21)
+
+
+### Bug Fixes
+
+* can create items in v12 ([300aed9](https://www.github.com/winks-vtt/yze-coriolis/commit/300aed936acde1001a23c97c6635594204812a5b))
+
+## [3.9.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.8.0...v3.9.0) (2024-07-20)
+
+
+### Features
+
+* updated support to v12 ([65ecc00](https://www.github.com/winks-vtt/yze-coriolis/commit/65ecc00f2e037fa763aaaa5996f3ae86419d8912))
+
+
+### Miscellaneous
+
+* vsode settings ([44361df](https://www.github.com/winks-vtt/yze-coriolis/commit/44361dfef58d7e3603387a3e72cdc2f9a5a0f3e7))
+
+## [3.8.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.7.0...v3.8.0) (2024-04-22)
+
+
+### Features
+
+* added more modifier options such as "all", blessing and prayers. ([2ba2a6e](https://www.github.com/winks-vtt/yze-coriolis/commit/2ba2a6eec570797c940fa605281337dcbd1608ca))
+
+
+### Bug Fixes
+
+* bug with compendium items conflicting with hp bonus modifiers ([a34a0ab](https://www.github.com/winks-vtt/yze-coriolis/commit/a34a0ab250c8771f202afa6ddcf4b8e842efee86))
+* fix some german localization ([9b11175](https://www.github.com/winks-vtt/yze-coriolis/commit/9b11175c9709c783a4ed2a9fe61fc0c0f9abff5a))
+* modifiers not showing up correctly in roll dialog ([0cc43fe](https://www.github.com/winks-vtt/yze-coriolis/commit/0cc43fe7145de953053f08ca61f6f1354d5ed0dc))
+
+## [3.7.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.6.0...v3.7.0) (2024-04-05)
+
+
+### Features
+
+* introduced item modifiers ([debc278](https://www.github.com/winks-vtt/yze-coriolis/commit/debc27843c2822421d96b969f7be9209fb3435be))
+* reworked ship modules ([64a2c11](https://www.github.com/winks-vtt/yze-coriolis/commit/64a2c111751eae18fb7c539f48799de2f3c6075b))
+* roll modifier dialog reworked ([57ac103](https://www.github.com/winks-vtt/yze-coriolis/commit/57ac103ad255728a9ba412e998666ea09ff2b4ca))
+* updated item stylings ([cba552a](https://www.github.com/winks-vtt/yze-coriolis/commit/cba552a75c51b599b5dd5d7d72a4c47ecd5077da))
+
+
+### Bug Fixes
+
+* overlay issue with crit injury descriptions ([f9e4a48](https://www.github.com/winks-vtt/yze-coriolis/commit/f9e4a48c832189f1918ab04a81dc9d8c9de19f65))
+
+## [3.6.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.5.0...v3.6.0) (2024-03-27)
+
+
+### Features
+
+* made roll visibility a system option ([e40df58](https://www.github.com/winks-vtt/yze-coriolis/commit/e40df58c4f05b060b146274c0c3f1797b1c1935b))
+
+
+### Bug Fixes
+
+* updated de localization ([bda14a9](https://www.github.com/winks-vtt/yze-coriolis/commit/bda14a91f7f6c08c56c3bd3d25dc44ac3ac5c5fb))
+
 ## [3.5.0](https://www.github.com/winks-vtt/yze-coriolis/compare/v3.4.0...v3.5.0) (2024-01-23)
 
 

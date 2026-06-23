@@ -1,5 +1,5 @@
-import { coriolisRoll, coriolisModifierDialog } from "../coriolis-roll.js";
-import { migrateBlastPower } from "../migration.js";
+import { CoriolisModifierDialog } from "../coriolisRollModifier.js";
+import { migrateBlastPower, migrateTalentBonus } from "../migration.js";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -18,12 +18,20 @@ export class yzecoriolisItem extends Item {
     if (itemData.type === "talent") this._prepareTalentData(itemData);
 
     // Migrate wrong blastPower-values
-    if (itemData.type === "weapon" && itemData.system.explosive) migrateBlastPower(itemData);
+    if (itemData.type === "weapon" && itemData.system.explosive) {
+      // TODO: move this to migrateData
+      migrateBlastPower(itemData);
+    }
   }
 
   // eslint-disable-next-line no-unused-vars
   _prepareTalentData(itemData) {
     // TODO: prep talent data
+  }
+
+  static migrateData(source) {
+    migrateTalentBonus(source);
+    return super.migrateData(source);
   }
 
   async _preCreate(initData, options, user) {
@@ -49,10 +57,23 @@ export class yzecoriolisItem extends Item {
     const skillKey = getSkillKeyForWeaponType(itemData.melee);
     const attributeKey = getAttributeKeyForWeaponType(itemData.melee);
     const rollType = getRollType(item.type);
+
     let bonus = itemData.bonus ? Number(itemData.bonus) : 0;
     if (rollType === "armor") {
       bonus = itemData.armorRating;
     }
+
+    let itemModifiers = {};
+    if (rollType === "armor") {
+      itemModifiers = actorData.itemModifiers.armor;
+    } else {
+      if (actorData.itemModifiers[skillKey]) {
+        itemModifiers = actorData.itemModifiers[skillKey];
+      } else {
+        itemModifiers = actorData.itemModifiers[attributeKey];
+      }
+    }
+
     const rollData = {
       rollType: rollType,
       actorType: this.actor.type,
@@ -76,16 +97,13 @@ export class yzecoriolisItem extends Item {
       features: itemData.special
         ? Object.values(itemData.special).join(", ")
         : "",
+      itemModifiers: itemModifiers,
     };
     const chatOptions = this.actor._prepareChatRollOptions(
       "systems/yzecoriolis/templates/sidebar/roll.html",
       rollType
     );
-    coriolisModifierDialog((modifier, additionalData) => {
-      rollData.modifier = modifier;
-      rollData.additionalData = additionalData;
-      coriolisRoll(chatOptions, rollData);
-    }, itemData.automatic);
+    new CoriolisModifierDialog(rollData, chatOptions).render(true);
   }
 
   async getChatData(htmlOptions) {
@@ -116,6 +134,9 @@ export class yzecoriolisItem extends Item {
     const templateData = {
       item: foundry.utils.deepClone(this),
       icon: imgPath,
+      itemModifiers: this.system.itemModifiers
+        ? Object.values(this.system.itemModifiers)
+        : "",
     };
     const html = await renderTemplate(
       `systems/yzecoriolis/templates/sidebar/item.html`,
@@ -124,7 +145,7 @@ export class yzecoriolisItem extends Item {
     const msg = {
       content: html,
     };
-    ChatMessage.create(msg, false);
+    await ChatMessage.create(msg);
   }
 
   _weaponChatData(data, labels, props) {
@@ -137,22 +158,6 @@ export class yzecoriolisItem extends Item {
     for (let p of Object.values(this.system.special)) {
       props.push(p);
     }
-  }
-
-  /**
-   * Foundry doesn't have a built-in way to hide certain item types. This is a
-   * work around.
-   * @override
-   */
-  static async createDialog(data, options) {
-    const hiddenItems = ["energyPointToken", "item"];
-    const original = game.system.documentTypes.Item;
-    game.system.documentTypes.Item = original.filter(
-      (itemType) => !hiddenItems.includes(itemType)
-    );
-    const newItem = super.createDialog(data, options);
-    game.system.documentTypes.Item = original;
-    return newItem;
   }
 }
 
